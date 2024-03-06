@@ -34,6 +34,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: kazu-2020/fractional_indexer
+          file: coverage/coverage.xml
 
   lint:
     runs-on: ubuntu-latest
