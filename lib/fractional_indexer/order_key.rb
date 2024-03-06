@@ -27,7 +27,7 @@ module FractionalIndexer
     end
 
     def smallest_integer?
-      key == smallest_integer
+      integer == smallest_integer
     end
 
     private
@@ -55,7 +55,7 @@ module FractionalIndexer
     end
 
     def valid_fractional?(fractional)
-      fractional[-1] != '0'
+      !fractional.end_with?(digits.first)
     end
 
     def valid_integer?(integer)

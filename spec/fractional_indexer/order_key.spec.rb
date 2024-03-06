@@ -84,7 +84,7 @@ RSpec.describe FractionalIndexer::OrderKey do
     subject { described_class.new(key).smallest_integer? }
 
     context "when key is smallest integer" do
-      let(:key) { 'A' + '0' * 26 }
+      let(:key) { 'A' + '0' * 26 + 'z'}
 
       it { is_expected.to be_truthy }
     end
