@@ -4,9 +4,9 @@ module FractionalIndexer
   autoload :Midpoint, "fractional_indexer/midpoint"
   autoload :Configuration, "fractional_indexer/configuration"
   autoload :Integer, "fractional_indexer/integer"
+  autoload :OrderKey, "fractional_indexer/order_key"
 
-  class Error < StandardError; end
-  # Your code goes here...
+  class FractionalIndexerError < StandardError; end
 
   @@configuration = Configuration.new
 
