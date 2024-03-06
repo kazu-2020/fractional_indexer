@@ -2,6 +2,15 @@
 
 require "bundler/setup"
 require "fractional_indexer"
+require "simplecov"
+require "simplecov-cobertura"
+
+if ENV["CI"]
+  SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
+end
+SimpleCov.start
+
+# Previous content of test helper now starts here
 
 RSpec.configure do |config|
   config.example_status_persistence_file_path = ".rspec_status"

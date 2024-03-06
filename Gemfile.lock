@@ -8,6 +8,7 @@ GEM
   specs:
     ast (2.4.2)
     diff-lcs (1.5.1)
+    docile (1.4.0)
     json (2.7.1)
     language_server-protocol (3.17.0.3)
     parallel (1.24.0)
@@ -56,6 +57,15 @@ GEM
     rubocop-shopify (2.15.1)
       rubocop (~> 1.51)
     ruby-progressbar (1.13.0)
+    simplecov (0.21.2)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-cobertura (2.1.0)
+      rexml
+      simplecov (~> 0.19)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
     unicode-display_width (2.5.0)
 
 PLATFORMS
@@ -70,6 +80,8 @@ DEPENDENCIES
   rubocop (~> 1.61)
   rubocop-rspec
   rubocop-shopify
+  simplecov (~> 0.21.2)
+  simplecov-cobertura
 
 BUNDLED WITH
    2.4.10
