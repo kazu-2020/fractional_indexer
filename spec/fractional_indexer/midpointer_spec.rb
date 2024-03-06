@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe FractionalIndexer::Midpointer do
   describe ".execute" do
     subject { described_class.execute(prev_pos, next_pos) }
@@ -42,7 +44,9 @@ RSpec.describe FractionalIndexer::Midpointer do
         let(:next_pos) { "0" }
 
         it {
-          expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError, "prev_pos must be less than next_pos")
+          expect do
+            subject
+          end.to raise_error(FractionalIndexer::FractionalIndexerError, "prev_pos must be less than next_pos")
         }
       end
 
@@ -51,7 +55,9 @@ RSpec.describe FractionalIndexer::Midpointer do
         let(:next_pos) { "20" }
 
         it {
-          expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError, "prev_pos and next_pos cannot end with 0")
+          expect do
+            subject
+          end.to raise_error(FractionalIndexer::FractionalIndexerError, "prev_pos and next_pos cannot end with 0")
         }
       end
 
@@ -60,7 +66,9 @@ RSpec.describe FractionalIndexer::Midpointer do
         let(:next_pos) { "2" }
 
         it {
-          expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError, "prev_pos and next_pos cannot end with 0")
+          expect do
+            subject
+          end.to raise_error(FractionalIndexer::FractionalIndexerError, "prev_pos and next_pos cannot end with 0")
         }
       end
 
@@ -105,8 +113,6 @@ RSpec.describe FractionalIndexer::Midpointer do
 
         it { is_expected.to eq("995") }
       end
-
-
 
       context "when prev_pos is nil and next_pos is 5" do
         let(:prev_pos) { nil }

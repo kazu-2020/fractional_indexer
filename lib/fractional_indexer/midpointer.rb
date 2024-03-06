@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FractionalIndexer
   class Midpointer
     def self.execute(prev_pos = nil, next_pos = nil)
@@ -8,13 +10,11 @@ module FractionalIndexer
       prev_pos = prev_pos.to_s
       next_pos = next_pos.to_s
 
-      if prev_pos.empty? && next_pos.empty?
-        return digits[digits.length / 2]
-      end
+      return digits[digits.length / 2] if prev_pos.empty? && next_pos.empty?
 
       validate_positions!(prev_pos, next_pos)
 
-      if !next_pos.empty?
+      unless next_pos.empty?
         n = 0
 
         # Get a common prefix for prev_pos and next_pos.
@@ -22,11 +22,9 @@ module FractionalIndexer
         # Example:
         #  prev_pos = "123", next_pos = "1230005"
         #  prefix = "123000"
-        while (prev_pos[n] || digits.first) == next_pos[n]
-          n += 1
-        end
+        n += 1 while (prev_pos[n] || digits.first) == next_pos[n]
 
-        return next_pos[0, n] + execute(prev_pos[n..], next_pos[n..]) if n > 0
+        return next_pos[0, n] + execute(prev_pos[n..], next_pos[n..]) if n.positive?
       end
 
       digit_a = prev_pos.empty?   ? 0             : digits.index(prev_pos[0])
@@ -52,16 +50,14 @@ module FractionalIndexer
     end
 
     def validate_positions!(prev_pos, next_pos)
-      if !next_pos.empty? && prev_pos >= next_pos
-        raise FractionalIndexerError, "prev_pos must be less than next_pos"
-      end
+      raise FractionalIndexerError, "prev_pos must be less than next_pos" if !next_pos.empty? && prev_pos >= next_pos
 
       # NOTE
       # In a string, "0.3" and "0.30" are mathematically equivalent.
       # Therefore, a trailing "0" is prohibited.
-      if prev_pos.end_with?(digits.first) || next_pos.end_with?(digits.first)
-        raise FractionalIndexerError, "prev_pos and next_pos cannot end with #{digits.first}"
-      end
+      return unless prev_pos.end_with?(digits.first) || next_pos.end_with?(digits.first)
+
+      raise FractionalIndexerError, "prev_pos and next_pos cannot end with #{digits.first}"
     end
   end
 end
