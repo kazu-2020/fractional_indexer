@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 RSpec.describe FractionalIndexer::Decrementer do
   describe ".execute" do
     subject { described_class.execute(order_key) }
+
     let(:order_key) { FractionalIndexer::OrderKey.new(key) }
 
     describe "use base 10" do
@@ -34,8 +37,8 @@ RSpec.describe FractionalIndexer::Decrementer do
         it { is_expected.to eq("Y99") }
       end
 
-      context "when key is 'A#{'0' * 26}'" do
-        let(:key) { 'A' + '0' * 26 }
+      context "when key is 'A#{"0" * 26}'" do
+        let(:key) { "A" + "0" * 26 }
 
         it { is_expected.to be_nil }
       end
@@ -96,8 +99,8 @@ RSpec.describe FractionalIndexer::Decrementer do
         it { is_expected.to eq("dABzz") }
       end
 
-      context "when key is 'A#{'0' * 26}'" do
-        let(:key) { 'A' + '0' * 26 }
+      context "when key is 'A#{"0" * 26}'" do
+        let(:key) { "A" + "0" * 26 }
 
         it { is_expected.to be_nil }
       end

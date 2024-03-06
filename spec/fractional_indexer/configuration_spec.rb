@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe FractionalIndexer::Configuration do
   describe "#digits" do
     subject { described_class.new.digits }
@@ -5,7 +7,7 @@ RSpec.describe FractionalIndexer::Configuration do
     it { is_expected.to eq((described_class::DIGITS_LIST[:base_62]).to_a) }
 
     context "when change base to 10" do
-      it 'should return base 10 digits' do
+      it "returns base 10 digits" do
         config = described_class.new
         config.base = :base_10
 
@@ -14,7 +16,7 @@ RSpec.describe FractionalIndexer::Configuration do
     end
 
     context "when change base to 94" do
-      it 'should return base 94 digits' do
+      it "returns base 94 digits" do
         config = described_class.new
         config.base = :base_94
 
@@ -23,7 +25,7 @@ RSpec.describe FractionalIndexer::Configuration do
     end
 
     context "when change base to invalid value" do
-      it 'should return base 62 digits' do
+      it "returns base 62 digits" do
         config = described_class.new
         config.base = :base_100
 

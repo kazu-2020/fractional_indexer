@@ -1,0 +1,25 @@
+require:
+  - rubocop-rspec
+
+inherit_gem:
+  rubocop-shopify: rubocop.yml
+
+AllCops:
+  TargetRubyVersion: 2.7
+  NewCops: enable
+  Exclude:
+    - Rakefile
+    - 'bin/*'
+
+Style/ClassMethodsDefinitions:
+  EnforcedStyle: def_self
+
+Style/MethodCallWithArgsParentheses:
+  Exclude:
+    - 'spec/**/*'
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false

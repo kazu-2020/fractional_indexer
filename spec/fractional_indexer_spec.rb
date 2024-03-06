@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe FractionalIndexer do
   describe ".generate_key" do
     subject { described_class.generate_key(prev_key: prev_key, next_key: next_key) }
@@ -6,180 +8,188 @@ RSpec.describe FractionalIndexer do
       let(:prev_key) { nil }
       let(:next_key) { nil }
 
-      it { is_expected.to eq('a0') }
+      it { is_expected.to eq("a0") }
     end
 
     context "when prev_key is less than next_key" do
-      let(:prev_key) { 'a0' }
-      let(:next_key) { 'Z9' }
+      let(:prev_key) { "a0" }
+      let(:next_key) { "Z9" }
 
       it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError, "a0 is not less than Z9") }
     end
 
     context "when prev_key is empty and next_key is 'a0'" do
-      let(:prev_key) { '' }
-      let(:next_key) { 'a0' }
+      let(:prev_key) { "" }
+      let(:next_key) { "a0" }
 
-      it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError, "prev_key and next_key cannot be empty") }
+      it {
+        expect do
+          subject
+        end.to raise_error(FractionalIndexer::FractionalIndexerError, "prev_key and next_key cannot be empty")
+      }
     end
 
     context "when prev_key is 'a0' and next_key is empty" do
-      let(:prev_key) { 'a0' }
-      let(:next_key) { '' }
+      let(:prev_key) { "a0" }
+      let(:next_key) { "" }
 
-      it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError, "prev_key and next_key cannot be empty") }
+      it {
+        expect do
+          subject
+        end.to raise_error(FractionalIndexer::FractionalIndexerError, "prev_key and next_key cannot be empty")
+      }
     end
 
     context "when prev_key is nil and next_key is 'a0'" do
       let(:prev_key) { nil }
-      let(:next_key) { 'a0' }
+      let(:next_key) { "a0" }
 
-      it { is_expected.to eq('Zz') }
+      it { is_expected.to eq("Zz") }
     end
 
     context "when prev_key is 'a0' and next_key is nil" do
-      let(:prev_key) { 'a0' }
+      let(:prev_key) { "a0" }
       let(:next_key) { nil }
 
-      it { is_expected.to eq('a1') }
+      it { is_expected.to eq("a1") }
     end
 
     context "when prev_key is 'a0' and next_key is 'a1'" do
-      let(:prev_key) { 'a0' }
-      let(:next_key) { 'a1' }
+      let(:prev_key) { "a0" }
+      let(:next_key) { "a1" }
 
-      it { is_expected.to eq('a0V') }
+      it { is_expected.to eq("a0V") }
     end
 
     context "when prev_key is 'a0V' and next_key is 'a1'" do
-      let(:prev_key) { 'a0V' }
-      let(:next_key) { 'a1' }
+      let(:prev_key) { "a0V" }
+      let(:next_key) { "a1" }
 
-      it { is_expected.to eq('a0l') }
+      it { is_expected.to eq("a0l") }
     end
 
     context "when prev_key is 'Zz' and next_key is 'a0'" do
-      let(:prev_key) { 'Zz' }
-      let(:next_key) { 'a0' }
+      let(:prev_key) { "Zz" }
+      let(:next_key) { "a0" }
 
-      it { is_expected.to eq('ZzV') }
+      it { is_expected.to eq("ZzV") }
     end
 
     context "when prev_key is 'Zz' and next_key is 'a1'" do
-      let(:prev_key) { 'Zz' }
-      let(:next_key) { 'a1' }
+      let(:prev_key) { "Zz" }
+      let(:next_key) { "a1" }
 
-      it { is_expected.to eq('a0') }
+      it { is_expected.to eq("a0") }
     end
 
     context "when prev_key is nil and next_key is 'Y00'" do
       let(:prev_key) { nil }
-      let(:next_key) { 'Y00' }
+      let(:next_key) { "Y00" }
 
-      it { is_expected.to eq('Xzzz') }
+      it { is_expected.to eq("Xzzz") }
     end
 
     context "when prev_key is 'bzz' and next_key is nil" do
-      let(:prev_key) { 'bzz' }
+      let(:prev_key) { "bzz" }
       let(:next_key) { nil }
 
-      it { is_expected.to eq('c000') }
+      it { is_expected.to eq("c000") }
     end
 
     context "when prev_key is 'a0' and next_key is 'a0V" do
-      let(:prev_key) { 'a0' }
-      let(:next_key) { 'a0V' }
+      let(:prev_key) { "a0" }
+      let(:next_key) { "a0V" }
 
-      it { is_expected.to eq('a0G') }
+      it { is_expected.to eq("a0G") }
     end
 
     context "when prev_key is 'a0' and next_key is 'a0G" do
-      let(:prev_key) { 'a0' }
-      let(:next_key) { 'a0G' }
+      let(:prev_key) { "a0" }
+      let(:next_key) { "a0G" }
 
-      it { is_expected.to eq('a08') }
+      it { is_expected.to eq("a08") }
     end
 
     context "when prev_key is 'b125' and next_key is 'b129'" do
-      let(:prev_key) { 'b125' }
-      let(:next_key) { 'b129' }
+      let(:prev_key) { "b125" }
+      let(:next_key) { "b129" }
 
-      it { is_expected.to eq('b127') }
+      it { is_expected.to eq("b127") }
     end
 
     context "when prev_key is 'a0' and next_key is 'a1V'" do
-      let(:prev_key) { 'a0' }
-      let(:next_key) { 'a1V' }
+      let(:prev_key) { "a0" }
+      let(:next_key) { "a1V" }
 
-      it { is_expected.to eq('a1') }
+      it { is_expected.to eq("a1") }
     end
 
     context "when prev_key is 'Zz' and next_key is 'a01'" do
-      let(:prev_key) { 'Zz' }
-      let(:next_key) { 'a01' }
+      let(:prev_key) { "Zz" }
+      let(:next_key) { "a01" }
 
-      it { is_expected.to eq('a0') }
+      it { is_expected.to eq("a0") }
     end
 
     context "when prev_key is nil and next_key is 'a0V'" do
       let(:prev_key) { nil }
-      let(:next_key) { 'a0V' }
+      let(:next_key) { "a0V" }
 
-      it { is_expected.to eq('a0') }
+      it { is_expected.to eq("a0") }
     end
 
     context "when prev_key is nil and next_key is 'b999'" do
       let(:prev_key) { nil }
-      let(:next_key) { 'b999' }
+      let(:next_key) { "b999" }
 
-      it { is_expected.to eq('b99') }
+      it { is_expected.to eq("b99") }
     end
 
     context "when prev_key is nil and next_key is 'A0000000000000000000000000'" do
       let(:prev_key) { nil }
-      let(:next_key) { 'A0000000000000000000000000' }
+      let(:next_key) { "A0000000000000000000000000" }
 
-      it { expect { subject}.to raise_error(FractionalIndexer::FractionalIndexerError) }
+      it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError) }
     end
 
     context "when prev_key is nil and next_key is 'A000000000000000000000000001'" do
       let(:prev_key) { nil }
-      let(:next_key) { 'A000000000000000000000000001' }
+      let(:next_key) { "A000000000000000000000000001" }
 
-      it { is_expected.to eq('A000000000000000000000000000V') }
+      it { is_expected.to eq("A000000000000000000000000000V") }
     end
 
-    context "when prev_key is '#{'z' * 26}y' and next_key is nil" do
-      let(:prev_key) { 'z' * 26 + 'y' }
+    context "when prev_key is '#{"z" * 26}y' and next_key is nil" do
+      let(:prev_key) { "z" * 26 + "y" }
       let(:next_key) { nil }
 
-      it { is_expected.to eq('z' * 27) }
+      it { is_expected.to eq("z" * 27) }
     end
 
     context "when prev_key is 'z' * 27 and next_key is nil" do
-      let(:prev_key) { 'z' * 27 }
+      let(:prev_key) { "z" * 27 }
       let(:next_key) { nil }
 
-      it { is_expected.to eq('z' * 27 + 'V') }
+      it { is_expected.to eq("z" * 27 + "V") }
     end
 
     context "when prev_key is 'a00' and next_key is nil" do
-      let(:prev_key) { 'a00' }
+      let(:prev_key) { "a00" }
       let(:next_key) { nil }
 
       it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError) }
     end
 
     context "when prev_key is 'a00' and next_key is 'a1'" do
-      let(:prev_key) { 'a00' }
-      let(:next_key) { 'a1' }
+      let(:prev_key) { "a00" }
+      let(:next_key) { "a1" }
 
       it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError) }
     end
 
     context "when prev_key is '0' and next_key is '1'" do
-      let(:prev_key) { '0' }
-      let(:next_key) { '1' }
+      let(:prev_key) { "0" }
+      let(:next_key) { "1" }
 
       it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError) }
     end

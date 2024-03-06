@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FractionalIndexer
   class Decrementer
     def self.execute(order_key)
@@ -23,11 +25,11 @@ module FractionalIndexer
 
       return prefix + digs.join unless borrow
 
-      return 'Z' + digits[-1] if prefix == 'a'
-      return nil if prefix == 'A'
+      return "Z#{digits[-1]}" if prefix == "a"
+      return if prefix == "A"
 
       new_key = (prefix.ord - 1).chr
-      new_key < 'Z' ? digs.push(digits[-1]) : digs.pop
+      new_key < "Z" ? digs.push(digits[-1]) : digs.pop
 
       new_key + digs.join
     end

@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 module FractionalIndexer
   class Incrementer
-
     def self.execute(order_key)
       new.execute(order_key)
     end
@@ -24,11 +25,11 @@ module FractionalIndexer
 
       return prefix + digs.join unless carry
 
-      return order_key.class.zero if prefix == 'Z'
-      return nil  if prefix == 'z'
+      return order_key.class.zero if prefix == "Z"
+      return if prefix == "z"
 
       new_key = (prefix.ord + 1).chr
-      new_key > 'a' ? digs.push('0') : digs.pop
+      new_key > "a" ? digs.push("0") : digs.pop
 
       new_key + digs.join
     end

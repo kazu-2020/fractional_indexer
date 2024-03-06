@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module FractionalIndexer
   class OrderKey
-    INTEGER_BASE_DIGIT = 2.freeze
-    POSITIVE_SIGNS = ('a'..'z').freeze
-    NEGATIVE_SIGNS = ('A'..'Z').freeze
+    INTEGER_BASE_DIGIT = 2
+    POSITIVE_SIGNS = ("a".."z").freeze
+    NEGATIVE_SIGNS = ("A".."Z").freeze
 
     attr_reader :key
 
@@ -19,7 +21,7 @@ module FractionalIndexer
     end
 
     def self.zero
-      'a' + FractionalIndexer.configuration.digits.first
+      "a#{FractionalIndexer.configuration.digits.first}"
     end
 
     def decrement
@@ -68,16 +70,16 @@ module FractionalIndexer
 
     def integer_digits(key = self.key)
       if self.class.positive?(key)
-        key.ord - 'a'.ord + INTEGER_BASE_DIGIT
+        key.ord - "a".ord + INTEGER_BASE_DIGIT
       elsif self.class.negative?(key)
-        'Z'.ord - key.ord + INTEGER_BASE_DIGIT
+        "Z".ord - key.ord + INTEGER_BASE_DIGIT
       else
         raise_error("prefix '#{key[0]}' is invalid. It should be a-z or A-Z.")
       end
     end
 
     def maximum_integer
-      'z' + digits.last * POSITIVE_SIGNS.count
+      "z#{digits.last * POSITIVE_SIGNS.count}"
     end
 
     def raise_error(description = nil)
@@ -85,7 +87,7 @@ module FractionalIndexer
     end
 
     def minimum_integer
-      'A' + digits.first * POSITIVE_SIGNS.count
+      "A#{digits.first * POSITIVE_SIGNS.count}"
     end
 
     def valid_fractional?(fractional)
