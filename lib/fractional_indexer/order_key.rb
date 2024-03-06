@@ -26,36 +26,38 @@ module FractionalIndexer
       new_order_key = Decrementer.execute(self)
       raise_error("it cannot decrement for min integer") if new_order_key.nil?
 
-      @key = new_order_key
+      new_order_key
     end
 
     def fractional
-      result = key[integer_digits..]
-      raise_error("fractional '#{result}' is invalid.") unless valid_fractional?(result)
+      validate!
 
-      result
+      key[integer_digits..]
     end
 
     def increment
       new_order_key = Incrementer.execute(self)
       raise_error("it cannot increment for max integer") if new_order_key.nil?
 
-      @key = new_order_key
+      new_order_key
     end
 
     def integer
-      result = key[0, integer_digits]
-      raise_error("integer '#{result}' is invalid.") unless valid_integer?(result)
+      validate!
 
-      result
+      key[0, integer_digits]
+    end
+
+    def maximum_integer?
+      integer == maximum_integer
+    end
+
+    def minimum_integer?
+      integer == minimum_integer
     end
 
     def present?
       !(key.nil? || key.empty?)
-    end
-
-    def smallest_integer?
-      integer == smallest_integer
     end
 
     private
@@ -64,7 +66,7 @@ module FractionalIndexer
       FractionalIndexer.configuration.digits
     end
 
-    def integer_digits
+    def integer_digits(key = self.key)
       if self.class.positive?(key)
         key.ord - 'a'.ord + INTEGER_BASE_DIGIT
       elsif self.class.negative?(key)
@@ -74,12 +76,16 @@ module FractionalIndexer
       end
     end
 
+    def maximum_integer
+      'z' + digits.last * POSITIVE_SIGNS.count
+    end
+
     def raise_error(description = nil)
       raise FractionalIndexerError, "invalid order key: '#{key}' description: #{description}"
     end
 
-    def smallest_integer
-      'A' + digits.first * ('a'..'z').count
+    def minimum_integer
+      'A' + digits.first * POSITIVE_SIGNS.count
     end
 
     def valid_fractional?(fractional)
@@ -88,6 +94,14 @@ module FractionalIndexer
 
     def valid_integer?(integer)
       integer.length == integer_digits
+    end
+
+    def validate!
+      integer = key[0, integer_digits]
+      raise_error("integer '#{integer}' is invalid.") unless valid_integer?(integer)
+
+      fractional = key[integer_digits..]
+      raise_error("fractional '#{fractional}' is invalid.") unless valid_fractional?(fractional)
     end
   end
 end

@@ -182,6 +182,39 @@ RSpec.describe FractionalIndexer::OrderKey do
     end
   end
 
+  describe '#maximum_integer?' do
+    subject { described_class.new(key).maximum_integer? }
+
+    context "when key is maximum integer" do
+      let(:key) { 'z' + 'z' * 26 + 'a' }
+
+      it { is_expected.to be_truthy }
+    end
+
+    context "when key is not maximum integer" do
+      let(:key) { 'z' + 'z' * 25 + 'a'  }
+
+      it { is_expected.to be_falsey}
+    end
+  end
+
+  describe '#minimum_integer?' do
+    subject { described_class.new(key).minimum_integer? }
+
+    context "when key is minimum integer" do
+      let(:key) { 'A' + '0' * 26 + 'z'}
+
+      it { is_expected.to be_truthy }
+    end
+
+    context "when key is not minimum integer" do
+      let(:key) { 'A' + '0' * 25 + '1' }
+
+      it { is_expected.to be_falsey }
+    end
+  end
+
+
   describe '#present?' do
     subject { described_class.new(key).present? }
 
@@ -201,22 +234,6 @@ RSpec.describe FractionalIndexer::OrderKey do
       let(:key) { 'a0' }
 
       it { is_expected.to be_truthy }
-    end
-  end
-
-  describe '#smallest_integer?' do
-    subject { described_class.new(key).smallest_integer? }
-
-    context "when key is smallest integer" do
-      let(:key) { 'A' + '0' * 26 + 'z'}
-
-      it { is_expected.to be_truthy }
-    end
-
-    context "when key is not smallest integer" do
-      let(:key) { 'A' + '0' * 25 + '1' }
-
-      it { is_expected.to be_falsey }
     end
   end
 end
