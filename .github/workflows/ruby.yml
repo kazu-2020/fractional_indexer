@@ -32,7 +32,7 @@ jobs:
         if: ${{ matrix.upload_codecov }}
         uses: codecov/codecov-action@v4.0.1
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ secrets.CODECOV_TOKEN }} && github.ref == 'refs/heads/main'
           slug: kazu-2020/fractional_indexer
           file: coverage/coverage.xml
 
