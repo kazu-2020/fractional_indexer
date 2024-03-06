@@ -89,6 +89,29 @@ RSpec.describe FractionalIndexer::OrderKey do
     end
   end
 
+  describe '#decrement' do
+    subject { described_class.new(key).decrement }
+
+    context "when key is 'A#{'0' * 26}'" do
+      let(:key) { 'A' + '0' * 26 }
+      let(:error_message) { "invalid order key: 'A00000000000000000000000000' description: it cannot decrement for min integer" }
+
+      it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError, error_message) }
+    end
+
+    context "when key is 'a1'" do
+      let(:key) { 'a1' }
+
+      it { is_expected.to eq('a0') }
+    end
+
+    context "when key is 'a0'" do
+      let(:key) { 'a0' }
+
+      it { is_expected.to eq('Zz') }
+    end
+  end
+
   describe '#fractional' do
     subject { described_class.new(key).fractional }
 

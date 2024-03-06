@@ -22,6 +22,13 @@ module FractionalIndexer
       'a' + FractionalIndexer.configuration.digits.first
     end
 
+    def decrement
+      new_order_key = Decrementer.execute(self)
+      raise_error("it cannot decrement for min integer") if new_order_key.nil?
+
+      @key = new_order_key
+    end
+
     def fractional
       result = key[integer_digits..]
       raise_error("fractional '#{result}' is invalid.") unless valid_fractional?(result)
@@ -34,8 +41,6 @@ module FractionalIndexer
       raise_error("it cannot increment for max integer") if new_order_key.nil?
 
       @key = new_order_key
-
-      @key
     end
 
     def integer
