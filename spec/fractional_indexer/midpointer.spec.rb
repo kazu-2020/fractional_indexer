@@ -1,8 +1,19 @@
-RSpec.describe FractionalIndexer::Midpoint do
-  describe "#generate" do
+RSpec.describe FractionalIndexer::Midpointer do
+  after do
+    FractionalIndexer.configure do |config|
+      config.base = :base_62
+    end
+  end
+
+  describe ".execute" do
+    subject { described_class.execute(prev_pos, next_pos) }
 
     describe "use base 10" do
-      subject { described_class.new.generate(prev_pos, next_pos) }
+      before do
+        FractionalIndexer.configure do |config|
+          config.base = :base_10
+        end
+      end
 
       context "when prev_pos and next_pos are nil" do
         let(:prev_pos) { nil }
@@ -175,8 +186,11 @@ RSpec.describe FractionalIndexer::Midpoint do
     end
 
     describe "use base 62" do
-      digits = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a
-      subject { described_class.new(digits).generate(prev_pos, next_pos) }
+      before do
+        FractionalIndexer.configure do |config|
+          config.base = :base_62
+        end
+      end
 
       context "when prev_pos is nil and next_pos is nil" do
         let(:prev_pos) { nil }

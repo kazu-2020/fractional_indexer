@@ -1,8 +1,8 @@
 require "fractional_indexer/version"
 
 module FractionalIndexer
-  autoload :Midpoint, "fractional_indexer/midpoint"
   autoload :Configuration, "fractional_indexer/configuration"
+  autoload :Midpointer, "fractional_indexer/midpointer"
   autoload :Integer, "fractional_indexer/integer"
   autoload :OrderKey, "fractional_indexer/order_key"
 

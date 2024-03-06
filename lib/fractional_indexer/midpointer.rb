@@ -1,14 +1,10 @@
 module FractionalIndexer
-  class FractionalIndexerError < StandardError; end
-
-  class Midpoint
-    DIGITS = ('0'..'9').to_a.freeze
-
-    def initialize(digits = DIGITS)
-      @digits = digits
+  class Midpointer
+    def self.execute(prev_pos = nil, next_pos = nil)
+      new.execute(prev_pos, next_pos)
     end
 
-    def generate(prev_pos = nil, next_pos = nil)
+    def execute(prev_pos = nil, next_pos = nil)
       prev_pos = prev_pos.to_s
       next_pos = next_pos.to_s
 
@@ -26,11 +22,11 @@ module FractionalIndexer
         # Example:
         #  prev_pos = "123", next_pos = "1230005"
         #  prefix = "123000"
-        while (prev_pos[n] || digits[0]) === next_pos[n]
+        while (prev_pos[n] || digits.first) == next_pos[n]
           n += 1
         end
 
-        return next_pos[0, n] + generate(prev_pos[n..], next_pos[n..]) if n > 0
+        return next_pos[0, n] + execute(prev_pos[n..], next_pos[n..]) if n > 0
       end
 
       digit_a = prev_pos.empty?   ? 0             : digits.index(prev_pos[0])
@@ -45,13 +41,15 @@ module FractionalIndexer
       if next_pos.length > 1
         next_pos[0]
       else
-        digits[digit_a] + generate(prev_pos[1..], nil)
+        digits[digit_a] + execute(prev_pos[1..], nil)
       end
     end
 
     private
 
-    attr_reader :digits
+    def digits
+      FractionalIndexer.configuration.digits
+    end
 
     def validate_positions!(prev_pos, next_pos)
       if !next_pos.empty? && prev_pos >= next_pos
@@ -61,8 +59,8 @@ module FractionalIndexer
       # NOTE
       # In a string, "0.3" and "0.30" are mathematically equivalent.
       # Therefore, a trailing "0" is prohibited.
-      if prev_pos.end_with?(digits[0]) || next_pos.end_with?(digits[0])
-        raise FractionalIndexerError, "prev_pos and next_pos cannot end with #{DIGITS[0]}"
+      if prev_pos.end_with?(digits.first) || next_pos.end_with?(digits.first)
+        raise FractionalIndexerError, "prev_pos and next_pos cannot end with #{digits.first}"
       end
     end
   end
