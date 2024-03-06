@@ -1,11 +1,21 @@
 module FractionalIndexer
   class OrderKey
     INTEGER_BASE_DIGIT = 2.freeze
+    POSITIVE_SIGNS = ('a'..'z').freeze
+    NEGATIVE_SIGNS = ('A'..'Z').freeze
 
     attr_reader :key
 
     def initialize(key)
       @key = key
+    end
+
+    def self.negative?(key)
+      NEGATIVE_SIGNS.cover?(key[0])
+    end
+
+    def self.positive?(key)
+      POSITIVE_SIGNS.cover?(key[0])
     end
 
     def self.zero
@@ -19,11 +29,24 @@ module FractionalIndexer
       result
     end
 
+    def increment
+      new_order_key = Incrementer.execute(self)
+      raise_error("it cannot increment for max integer") if new_order_key.nil?
+
+      @key = new_order_key
+
+      @key
+    end
+
     def integer
       result = key[0, integer_digits]
       raise_error("integer '#{result}' is invalid.") unless valid_integer?(result)
 
       result
+    end
+
+    def present?
+      !(key.nil? || key.empty?)
     end
 
     def smallest_integer?
@@ -37,9 +60,9 @@ module FractionalIndexer
     end
 
     def integer_digits
-      if ('a'..'z').cover?(key[0])
+      if self.class.positive?(key)
         key.ord - 'a'.ord + INTEGER_BASE_DIGIT
-      elsif ('A'..'Z').cover?(key[0])
+      elsif self.class.negative?(key)
         'Z'.ord - key.ord + INTEGER_BASE_DIGIT
       else
         raise_error("prefix '#{key[0]}' is invalid. It should be a-z or A-Z.")

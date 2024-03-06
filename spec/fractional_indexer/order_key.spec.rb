@@ -5,6 +5,62 @@ RSpec.describe FractionalIndexer::OrderKey do
     end
   end
 
+  describe '.negative?' do
+    subject { described_class.negative?(key) }
+
+    context "when key is nil" do
+      let(:key) { nil }
+
+      it { expect { subject }.to raise_error(NoMethodError) }
+    end
+
+    context "when key is empty" do
+      let(:key) { '' }
+
+      it { is_expected.to be_falsey }
+    end
+
+    context 'when key is negative' do
+      let(:key) { 'Z0' }
+
+      it { is_expected.to be_truthy }
+    end
+
+    context 'when key is positive' do
+      let(:key) { 'a0' }
+
+      it { is_expected.to be_falsey }
+    end
+  end
+
+  describe '.positive?' do
+    subject { described_class.positive?(key) }
+
+    context "when key is nil" do
+      let(:key) { nil }
+
+      it { expect { subject }.to raise_error(NoMethodError) }
+    end
+
+    context "when key is empty" do
+      let(:key) { '' }
+
+      it { is_expected.to be_falsey }
+    end
+
+    context 'when key is negative' do
+      let(:key) { 'Z0' }
+
+      it { is_expected.to be_falsey }
+    end
+
+    context 'when key is positive' do
+      let(:key) { 'a0' }
+
+      it { is_expected.to be_truthy }
+    end
+  end
+
   describe '.zero' do
     subject { described_class.zero }
 
@@ -50,6 +106,29 @@ RSpec.describe FractionalIndexer::OrderKey do
     end
   end
 
+  describe '#increment' do
+    subject { described_class.new(key).increment }
+
+    context "when key is 'z#{'z' * 26}'" do
+      let(:key) { 'z' + 'z' * 26 }
+      let(:error_message) { "invalid order key: 'zzzzzzzzzzzzzzzzzzzzzzzzzzz' description: it cannot increment for max integer" }
+
+      it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError, error_message) }
+    end
+
+    context "when key is 'Zz'" do
+      let(:key) { 'Zz' }
+
+      it { is_expected.to eq('a0') }
+    end
+
+    context "when key is 'a1'" do
+      let(:key) { 'a1' }
+
+      it { is_expected.to eq('a2') }
+    end
+  end
+
   describe '#integer' do
     subject { described_class.new(key).integer }
 
@@ -77,6 +156,28 @@ RSpec.describe FractionalIndexer::OrderKey do
       let(:key) { 'b12z' }
 
       it { is_expected.to eq('b12') }
+    end
+  end
+
+  describe '#present?' do
+    subject { described_class.new(key).present? }
+
+    context "when key is nil" do
+      let(:key) { nil }
+
+      it { is_expected.to be_falsey }
+    end
+
+    context "when key is empty" do
+      let(:key) { '' }
+
+      it { is_expected.to be_falsey }
+    end
+
+    context "when key is not nil or empty" do
+      let(:key) { 'a0' }
+
+      it { is_expected.to be_truthy }
     end
   end
 

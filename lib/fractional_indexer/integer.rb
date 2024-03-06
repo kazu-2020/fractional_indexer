@@ -9,38 +9,8 @@ module FractionalIndexer
       @digits = digits
     end
 
-    def increment(position)
-      validate!(position)
-
-      order_key, *digs = position.chars
-      carry = true
-
-      (digs.length - 1).downto(0) do |i|
-        incremented_index = digits.index(digs[i]) + 1
-
-        if carry_over?(incremented_index)
-          digs[i] = digits[0]
-        else
-          digs[i] = digits[incremented_index]
-          carry = false
-
-          break
-        end
-      end
-
-      return order_key + digs.join unless carry
-
-      return 'a0' if order_key === 'Z'
-      return nil  if order_key === 'z'
-
-      new_order_key = (order_key.ord + 1).chr
-      new_order_key > 'a' ? digs.push('0') : digs.pop
-
-      new_order_key + digs.join
-    end
-
     def decrement(position)
-      validate!(position)
+      # validate!(position)
 
       order_key, *digs = position.chars
       borrow = true
@@ -69,16 +39,6 @@ module FractionalIndexer
       new_order_key + digs.join
     end
 
-    private
-
-    attr_reader :digits
-
-    def validate!(position)
-      if position.length != length!(position[0])
-        raise FractionalIndexerError, "Invalid integer part of order key: #{position[0]}"
-      end
-    end
-
     def length!(order_key)
       if ('a'..'z').cover?(order_key)
         order_key.ord - 'a'.ord + BASE_DIGIT
@@ -86,6 +46,24 @@ module FractionalIndexer
         'Z'.ord - order_key.ord + BASE_DIGIT
       else
         raise FractionalIndexerError, "Invalid order key: #{order_key}"
+      end
+    end
+
+    def smallest_integer
+      'A' + digits[0] * 26
+    end
+
+    def zero
+      'a' + digits[0]
+    end
+
+    private
+
+    attr_reader :digits
+
+    def validate!(position)
+      if position.length != length!(position[0])
+        raise FractionalIndexerError, "Invalid integer part of order key: #{position[0]}"
       end
     end
 
