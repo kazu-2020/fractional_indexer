@@ -1,10 +1,4 @@
 RSpec.describe FractionalIndexer::Decrementer do
-  after do
-    FractionalIndexer.configure do |config|
-      config.base = :base_62
-    end
-  end
-
   describe ".execute" do
     subject { described_class.execute(order_key) }
     let(:order_key) { FractionalIndexer::OrderKey.new(key) }

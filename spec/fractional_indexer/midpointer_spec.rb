@@ -1,10 +1,4 @@
 RSpec.describe FractionalIndexer::Midpointer do
-  after do
-    FractionalIndexer.configure do |config|
-      config.base = :base_62
-    end
-  end
-
   describe ".execute" do
     subject { described_class.execute(prev_pos, next_pos) }
 

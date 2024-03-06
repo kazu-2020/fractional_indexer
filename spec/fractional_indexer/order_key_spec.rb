@@ -1,10 +1,4 @@
 RSpec.describe FractionalIndexer::OrderKey do
-  after do
-    FractionalIndexer.configure do |config|
-      config.base = :base_62
-    end
-  end
-
   describe '.negative?' do
     subject { described_class.negative?(key) }
 
