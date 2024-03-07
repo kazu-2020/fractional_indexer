@@ -61,6 +61,26 @@ FractionalIndexer.generate_key(prev_key: 'a1', next_key: 'a1')
 # => error
 ```
 
+### Generate Multiple Order keys
+
+To generate multiple order keys, use the `FractionalIndexer.generate_keys` method.
+
+```ruby
+require 'fractional_indexer'
+
+# generate n order keys that sequentially follow a given prev_key.
+FractionalIndexer.generate_keys(prev_key: "b11", count: 5)
+# => ["b12", "b13", "b14", "b15", "b16"]
+
+# generate n order keys that sequentially precede a given next_key.
+FractionalIndexer.generate_keys(next_key: "b11", count: 5)
+# => ["b0w", "b0x", "b0y", "b0z", "b10"]
+
+# generate n order keys between the given prev_key and next_key.
+FractionalIndexer.generate_keys(prev_key: "b10", next_key: "b11", count: 5)
+# => ["b108", "b10G", "b10V", "b10d", "b10l"]
+```
+
 ## Configure
 
 ### base
