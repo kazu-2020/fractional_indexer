@@ -1,10 +1,15 @@
-# FractionalIndexer
+# Fractional Indexer
 
 [![codecov](https://codecov.io/gh/kazu-2020/fractional_indexer/graph/badge.svg?token=OCCYE4EKT1)](https://codecov.io/gh/kazu-2020/fractional_indexer)
+[![test](https://github.com/kazu-2020/fractional_indexer/actions/workflows/ruby.yml/badge.svg?branch=main&event=push)](https://github.com/kazu-2020/fractional_indexer/actions/workflows/ruby.yml)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/fractional_indexer`. To experiment with that code, run `bin/console` for an interactive prompt.
+> efficient data insertion and sorting through fractional indexing
 
-TODO: Delete this and the text above, and describe your gem
+This gem is designed to achieve "[Realtime editing of ordered sequences](https://www.figma.com/blog/realtime-editing-of-ordered-sequences/#fractional-indexing)" as featured in a Figma blog post.
+
+Specifically, it implements Fractional Indexing as a means of managing order, realized through strings. By managing indexes as strings, it significantly delays the occurrence of index duplication that can arise when implementing Fractional Indexing with floating-point numbers. Additionally, using strings allows for the representation of a much larger range of numbers in a single digit compared to decimal numbers (by default, a single digit is represented in base-62).
+
+This gem was implemented based on the excellent article "[Implementing Fractional Indexing.](https://observablehq.com/@dgreensp/implementing-fractional-indexing)" I would like to express my gratitude to David Greenspan, the author of the article.
 
 ## Installation
 
@@ -24,17 +29,71 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Generate Order key
 
-## Development
+To generate an order key, use the `FractionalIndexer.generate_key` method. This method can take two arguments: prev_key and next_key, both of which can be either nil or a string (excluding empty strings).
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+The characters that can be used in the strings are available for review in `FractionalIndexer.configuration.digits`.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```ruby
+require 'fractional_indexer'
+
+# create first order key
+FractionalIndexer.generate_key
+# => "a0"
+
+# increment
+FractionalIndexer.generate_key(prev_key: 'a0')
+# => "a1"
+
+# decrement
+FractionalIndexer.generate_key(next_key: 'a0')
+# => "Zz"
+
+# between prev_key and next_key
+FractionalIndexer.generate_key(prev_key: 'a0', next_key: 'a2')
+# => "a1"
+
+# prev_key should be less than next_key
+FractionalIndexer.generate_key(prev_key: 'a2', next_key: 'a1')
+# => error
+FractionalIndexer.generate_key(prev_key: 'a1', next_key: 'a1')
+# => error
+```
+
+## Configure
+
+### base
+
+You can set the base (number system) used to represent each digit. The possible values are :base_10, :base_62, and :base_94. (The default is :base_62.)
+
+Note: base_10 is primarily intended for operational verification and debugging purposes.
+
+```ruby
+require 'fractional_indexer'
+
+FractionalIndexer.configure do |config|
+  config.base = :base_10
+end
+FractionalIndexer.configuration.digits.join
+# => "0123456789"
+
+FractionalIndexer.configure do |config|
+  config.base = :base_62
+end
+FractionalIndexer.configuration.digits.join
+# => "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+
+FractionalIndexer.configure do |config|
+  config.base = :base_94
+end
+FractionalIndexer.configuration.digits.join
+# => "!\"\#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/fractional_indexer.
+Bug reports and pull requests are welcome on GitHub at https://github.com/kazu-2020/fractional_indexer.
 
 ## License
 
