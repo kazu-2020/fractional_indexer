@@ -2,16 +2,20 @@
 
 require "fractional_indexer/version"
 
-module FractionalIndexer
-  autoload :Configuration, "fractional_indexer/configuration"
-  autoload :Decrementer,   "fractional_indexer/decrementer"
-  autoload :Incrementer,   "fractional_indexer/incrementer"
-  autoload :Midpointer,    "fractional_indexer/midpointer"
-  autoload :OrderKey,      "fractional_indexer/order_key"
+require "fractional_indexer/configuration"
+require "fractional_indexer/decrementer"
+require "fractional_indexer/incrementer"
+require "fractional_indexer/midpointer"
+require "fractional_indexer/order_key"
 
+module FractionalIndexer
   class Error < StandardError; end
 
   @configuration = Configuration.new
+
+  [Decrementer, Incrementer, Midpointer, OrderKey].each do |klass|
+    klass.send(:define_method, :digits) { FractionalIndexer.configuration.digits }
+  end
 
   def self.configure
     yield(configuration) if block_given?

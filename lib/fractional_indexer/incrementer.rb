@@ -39,9 +39,5 @@ module FractionalIndexer
     def carry_over?(index)
       index == digits.length
     end
-
-    def digits
-      FractionalIndexer.configuration.digits
-    end
   end
 end

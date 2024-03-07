@@ -39,9 +39,5 @@ module FractionalIndexer
     def borrow?(index)
       index == -1
     end
-
-    def digits
-      FractionalIndexer.configuration.digits
-    end
   end
 end

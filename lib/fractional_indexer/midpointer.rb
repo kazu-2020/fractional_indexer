@@ -45,10 +45,6 @@ module FractionalIndexer
 
     private
 
-    def digits
-      FractionalIndexer.configuration.digits
-    end
-
     def validate_positions!(prev_pos, next_pos)
       raise Error, "prev_pos must be less than next_pos" if !next_pos.empty? && prev_pos >= next_pos
 

@@ -64,10 +64,6 @@ module FractionalIndexer
 
     private
 
-    def digits
-      FractionalIndexer.configuration.digits
-    end
-
     def integer_digits(key = self.key)
       if self.class.positive?(key)
         key.ord - "a".ord + INTEGER_BASE_DIGIT
