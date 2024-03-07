@@ -9,7 +9,7 @@ module FractionalIndexer
   autoload :Midpointer,    "fractional_indexer/midpointer"
   autoload :OrderKey,      "fractional_indexer/order_key"
 
-  class FractionalIndexerError < StandardError; end
+  class Error < StandardError; end
 
   @configuration = Configuration.new
 
@@ -26,10 +26,10 @@ module FractionalIndexer
   def self.generate_key(prev_key: nil, next_key: nil)
     return OrderKey.zero if prev_key.nil? && next_key.nil?
 
-    raise FractionalIndexerError, "prev_key and next_key cannot be empty" if prev_key&.empty? || next_key&.empty?
+    raise Error, "prev_key and next_key cannot be empty" if prev_key&.empty? || next_key&.empty?
 
     if !prev_key.nil? && !next_key.nil? && prev_key >= next_key
-      raise FractionalIndexerError, "#{prev_key} is not less than #{next_key}"
+      raise Error, "#{prev_key} is not less than #{next_key}"
     end
 
     prev_order_key = OrderKey.new(prev_key)

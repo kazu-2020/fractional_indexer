@@ -50,14 +50,14 @@ module FractionalIndexer
     end
 
     def validate_positions!(prev_pos, next_pos)
-      raise FractionalIndexerError, "prev_pos must be less than next_pos" if !next_pos.empty? && prev_pos >= next_pos
+      raise Error, "prev_pos must be less than next_pos" if !next_pos.empty? && prev_pos >= next_pos
 
       # NOTE
       # In a string, "0.3" and "0.30" are mathematically equivalent.
       # Therefore, a trailing "0" is prohibited.
       return unless prev_pos.end_with?(digits.first) || next_pos.end_with?(digits.first)
 
-      raise FractionalIndexerError, "prev_pos and next_pos cannot end with #{digits.first}"
+      raise Error, "prev_pos and next_pos cannot end with #{digits.first}"
     end
   end
 end

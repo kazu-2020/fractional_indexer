@@ -94,7 +94,7 @@ RSpec.describe FractionalIndexer::OrderKey do
         "invalid order key: 'A00000000000000000000000000' description: it cannot decrement for min integer"
       end
 
-      it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError, error_message) }
+      it { expect { subject }.to raise_error(FractionalIndexer::Error, error_message) }
     end
 
     context "when key is 'a1'" do
@@ -117,7 +117,7 @@ RSpec.describe FractionalIndexer::OrderKey do
       let(:key) { "a0010" }
       let(:error_message) { "invalid order key: '#{key}' description: fractional '010' is invalid." }
 
-      it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError, error_message) }
+      it { expect { subject }.to raise_error(FractionalIndexer::Error, error_message) }
     end
 
     context "when key is valid fractional" do
@@ -136,7 +136,7 @@ RSpec.describe FractionalIndexer::OrderKey do
         "invalid order key: 'zzzzzzzzzzzzzzzzzzzzzzzzzzz' description: it cannot increment for max integer"
       end
 
-      it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError, error_message) }
+      it { expect { subject }.to raise_error(FractionalIndexer::Error, error_message) }
     end
 
     context "when key is 'Zz'" do
@@ -159,14 +159,14 @@ RSpec.describe FractionalIndexer::OrderKey do
       let(:key) { "b1" }
       let(:error_message) { "invalid order key: '#{key}' description: integer 'b1' is invalid." }
 
-      it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError, error_message) }
+      it { expect { subject }.to raise_error(FractionalIndexer::Error, error_message) }
     end
 
     context "when key is invalid prefix" do
       let(:key) { "!9" }
       let(:error_message) { "invalid order key: '#{key}' description: prefix '!' is invalid. It should be a-z or A-Z." }
 
-      it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError, error_message) }
+      it { expect { subject }.to raise_error(FractionalIndexer::Error, error_message) }
     end
 
     context "when key only has digits" do

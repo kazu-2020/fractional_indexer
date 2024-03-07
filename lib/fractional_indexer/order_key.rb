@@ -83,7 +83,7 @@ module FractionalIndexer
     end
 
     def raise_error(description = nil)
-      raise FractionalIndexerError, "invalid order key: '#{key}' description: #{description}"
+      raise Error, "invalid order key: '#{key}' description: #{description}"
     end
 
     def minimum_integer

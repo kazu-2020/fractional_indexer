@@ -15,7 +15,7 @@ RSpec.describe FractionalIndexer do
       let(:prev_key) { "a0" }
       let(:next_key) { "Z9" }
 
-      it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError, "a0 is not less than Z9") }
+      it { expect { subject }.to raise_error(FractionalIndexer::Error, "a0 is not less than Z9") }
     end
 
     context "when prev_key is empty and next_key is 'a0'" do
@@ -25,7 +25,7 @@ RSpec.describe FractionalIndexer do
       it {
         expect do
           subject
-        end.to raise_error(FractionalIndexer::FractionalIndexerError, "prev_key and next_key cannot be empty")
+        end.to raise_error(FractionalIndexer::Error, "prev_key and next_key cannot be empty")
       }
     end
 
@@ -36,7 +36,7 @@ RSpec.describe FractionalIndexer do
       it {
         expect do
           subject
-        end.to raise_error(FractionalIndexer::FractionalIndexerError, "prev_key and next_key cannot be empty")
+        end.to raise_error(FractionalIndexer::Error, "prev_key and next_key cannot be empty")
       }
     end
 
@@ -149,7 +149,7 @@ RSpec.describe FractionalIndexer do
       let(:prev_key) { nil }
       let(:next_key) { "A0000000000000000000000000" }
 
-      it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError) }
+      it { expect { subject }.to raise_error(FractionalIndexer::Error) }
     end
 
     context "when prev_key is nil and next_key is 'A000000000000000000000000001'" do
@@ -177,21 +177,21 @@ RSpec.describe FractionalIndexer do
       let(:prev_key) { "a00" }
       let(:next_key) { nil }
 
-      it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError) }
+      it { expect { subject }.to raise_error(FractionalIndexer::Error) }
     end
 
     context "when prev_key is 'a00' and next_key is 'a1'" do
       let(:prev_key) { "a00" }
       let(:next_key) { "a1" }
 
-      it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError) }
+      it { expect { subject }.to raise_error(FractionalIndexer::Error) }
     end
 
     context "when prev_key is '0' and next_key is '1'" do
       let(:prev_key) { "0" }
       let(:next_key) { "1" }
 
-      it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError) }
+      it { expect { subject }.to raise_error(FractionalIndexer::Error) }
     end
   end
 

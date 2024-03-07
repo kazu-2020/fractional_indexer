@@ -46,7 +46,7 @@ RSpec.describe FractionalIndexer::Midpointer do
         it {
           expect do
             subject
-          end.to raise_error(FractionalIndexer::FractionalIndexerError, "prev_pos must be less than next_pos")
+          end.to raise_error(FractionalIndexer::Error, "prev_pos must be less than next_pos")
         }
       end
 
@@ -57,7 +57,7 @@ RSpec.describe FractionalIndexer::Midpointer do
         it {
           expect do
             subject
-          end.to raise_error(FractionalIndexer::FractionalIndexerError, "prev_pos and next_pos cannot end with 0")
+          end.to raise_error(FractionalIndexer::Error, "prev_pos and next_pos cannot end with 0")
         }
       end
 
@@ -68,7 +68,7 @@ RSpec.describe FractionalIndexer::Midpointer do
         it {
           expect do
             subject
-          end.to raise_error(FractionalIndexer::FractionalIndexerError, "prev_pos and next_pos cannot end with 0")
+          end.to raise_error(FractionalIndexer::Error, "prev_pos and next_pos cannot end with 0")
         }
       end
 
