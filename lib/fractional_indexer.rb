@@ -50,6 +50,42 @@ module FractionalIndexer
     end
   end
 
+  def self.generate_keys(prev_key: nil, next_key: nil, count: 1)
+    return [] if count <= 0
+    return [generate_key(prev_key: prev_key, next_key: next_key)] if count == 1
+
+    if next_key.nil?
+      base_order_key = generate_key(prev_key: prev_key)
+      result = [base_order_key]
+
+      (count - 1).times do
+        result << generate_key(prev_key: result.last)
+      end
+
+      return result
+    end
+
+    if prev_key.nil?
+      base_order_key = generate_key(next_key: next_key)
+      result = [base_order_key]
+
+      (count - 1).times do
+        result << generate_key(next_key: result.last)
+      end
+
+      return result.reverse
+    end
+
+    mid = count / 2
+    base_order_key = generate_key(prev_key: prev_key, next_key: next_key)
+
+    [
+      *generate_keys(prev_key: prev_key, next_key: base_order_key, count: mid),
+      base_order_key,
+      *generate_keys(prev_key: base_order_key, next_key: next_key, count: count - mid - 1),
+    ]
+  end
+
   def self.decrement(order_key)
     return order_key.integer + Midpointer.execute("", order_key.fractional) if order_key.minimum_integer?
 

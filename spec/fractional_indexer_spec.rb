@@ -194,4 +194,87 @@ RSpec.describe FractionalIndexer do
       it { expect { subject }.to raise_error(FractionalIndexer::FractionalIndexerError) }
     end
   end
+
+  describe ".generate_keys" do
+    subject { described_class.generate_keys(prev_key: prev_key, next_key: next_key, count: count) }
+
+    before do
+      described_class.configure do |config|
+        config.base = :base_10
+      end
+    end
+
+    context "when count is 0" do
+      let(:prev_key) { "a0" }
+      let(:next_key) { nil }
+      let(:count) { 0 }
+
+      it { is_expected.to eq([]) }
+    end
+
+    context "when count is -1" do
+      let(:prev_key) { "a0" }
+      let(:next_key) { nil }
+      let(:count) { 0 }
+
+      it { is_expected.to be_empty }
+    end
+
+    context "when prev_key is nil and next_key is nil and count is 5" do
+      let(:prev_key) { nil }
+      let(:next_key) { nil }
+      let(:count) { 5 }
+
+      it { is_expected.to eq(["a0", "a1", "a2", "a3", "a4"]) }
+    end
+
+    context "when prev_key is 'a41' and next_key is nil and count is 5" do
+      let(:prev_key) { "a41" }
+      let(:next_key) { nil }
+      let(:count) { 5 }
+
+      it { is_expected.to eq(["a5", "a6", "a7", "a8", "a9"]) }
+    end
+
+    context "when prev_key is nil and next_key is 'a1' and count is 2" do
+      let(:prev_key) { nil }
+      let(:next_key) { "a1" }
+      let(:count) { 2 }
+
+      it { is_expected.to eq(["Z9", "a0"]) }
+    end
+
+    context "when prev_key is 'a0' and next_key is 'a2' and count is 20" do
+      let(:prev_key) { "a0" }
+      let(:next_key) { "a2" }
+      let(:count) { 20 }
+
+      let(:result) do
+        [
+          "a01",
+          "a02",
+          "a03",
+          "a035",
+          "a04",
+          "a05",
+          "a06",
+          "a07",
+          "a08",
+          "a09",
+          "a1",
+          "a11",
+          "a12",
+          "a13",
+          "a14",
+          "a15",
+          "a16",
+          "a17",
+          "a18",
+          "a19",
+        ]
+      end
+
+      it { is_expected.to eq(result) }
+    end
+  end
 end
