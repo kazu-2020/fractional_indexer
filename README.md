@@ -21,17 +21,22 @@ gem 'fractional_indexer'
 
 And then execute:
 
-    $ bundle
+```sh
+bundle
+```
 
 Or install it yourself as:
 
-    $ gem install fractional_indexer
+```sh
+gem install fractional_indexer
+```
 
 ## Usage
 
 ### Generate Order key
 
-To generate an order key, use the `FractionalIndexer.generate_key` method. This method can take two arguments: prev_key and next_key, both of which can be either nil or a string (excluding empty strings).
+To generate an order key, use the `FractionalIndexer.generate_key` method.  
+This method can take two arguments: prev_key and next_key, both of which can be either nil or a string (excluding empty strings).
 
 The characters that can be used in the strings are available for review in `FractionalIndexer.configuration.digits`.
 
@@ -85,7 +90,8 @@ FractionalIndexer.generate_keys(prev_key: "b10", next_key: "b11", count: 5)
 
 ### base
 
-You can set the base (number system) used to represent each digit. The possible values are :base_10, :base_62, and :base_94. (The default is :base_62.)
+You can set the base (number system) used to represent each digit.  
+The possible values are :base_10, :base_62, and :base_94. (The default is :base_62)
 
 Note: base_10 is primarily intended for operational verification and debugging purposes.
 
@@ -111,9 +117,52 @@ FractionalIndexer.configuration.digits.join
 # => "!\"\#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
 ```
 
+## Order key
+
+This section explains the structure of the string that represents an Order Key.  
+An Order Key string is broadly divided into two parts: the integer part and the fractional part.
+
+Note: For ease of understanding, the explanation from here on will be based on the decimal system ('0' ~ '9')
+
+### Integer Part
+
+The integer part of the Order Key begins with a `mandatory prefix` that indicates the number of digits. This prefix is represented by one of the letters A to Z or a to z.  
+a is 1 digit, b is 2 digits, c is 3 digits ...... and z represents 26 digits.  
+The number of characters following the prefix must match the number of digits indicated by the prefix.  
+For example, if the prefix is a, a valid key could be 'a8', and if the prefix is c, a valid key could be 'c135'.
+
+```ruby
+'a9'    # Valid
+'b10'   # Valid
+'b9'    # Invalid (The prefix 'b' requires two digits)
+'c123'  # Valid
+'c12'   # Invalid (The prefix 'c' requires three digits)
+```
+
+Additionally, leveraging the characteristic that uppercase letters have a lower ASCII value than lowercase letters, a to z represent positive integers, while A to Z represent negative integers.
+
+### Fractional Part
+
+The Fractional Part refers to the portion of the string that follows the Integer Part, excluding the Integer Part itself.
+
+```ruby
+'a3012'
+# 'a3' : Integer Part
+# '012': Fractional Part
+```
+
+The Fractional Part cannot end with the first character of the base being used (e.g., '0' in base_10). This rule mirrors the mathematical principle that, for example, 0.3 and 0.30 represent the same value.
+
+```ruby
+'a32'  # Valid
+'a320' # Invalid (The Fractional Part cannot end with '0' in base_10)
+```
+
+This section clarifies the concept and rules regarding the Fractional Part of an Order Key, with examples to illustrate what constitutes a valid or invalid Fractional Part.
+
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/kazu-2020/fractional_indexer.
+Bug reports and pull requests are welcome on GitHub at <https://github.com/kazu-2020/fractional_indexer>.
 
 ## License
 
