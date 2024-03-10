@@ -91,9 +91,20 @@ module FractionalIndexer
   end
 
   def self.decrement(order_key)
+    # NOTE: edge case
+    # If an Order key does not have a fractional part and its integer part is equal to
+    # the minimum value (for example, in base_62: 'A00000000000000000000000000'),
+    # further decrement operations become impossible and will fail.
+    # However, this situation is typically unlikely to occur.
+    if order_key.minimum?
+      raise Error, "order key not decremented: #{order_key} is the minimum value"
+    end
     return order_key.integer + Midpointer.execute("", order_key.fractional) if order_key.minimum_integer?
 
-    order_key.integer < order_key.key ? order_key.integer : order_key.decrement
+    decremented_order_key = OrderKey.new(order_key.integer < order_key.key ? order_key.integer : order_key.decrement)
+    return decremented_order_key.integer + Midpointer.execute if decremented_order_key.minimum?
+
+    decremented_order_key.key
   end
 
   def self.increment(order_key)

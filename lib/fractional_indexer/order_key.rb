@@ -58,6 +58,10 @@ module FractionalIndexer
       integer == minimum_integer
     end
 
+    def minimum?
+      minimum_integer? && fractional.empty?
+    end
+
     def present?
       !(key.nil? || key.empty?)
     end
@@ -78,12 +82,12 @@ module FractionalIndexer
       "z#{digits.last * POSITIVE_SIGNS.count}"
     end
 
-    def raise_error(description = nil)
-      raise Error, "invalid order key: '#{key}' description: #{description}"
-    end
-
     def minimum_integer
       "A#{digits.first * POSITIVE_SIGNS.count}"
+    end
+
+    def raise_error(description = nil)
+      raise Error, "invalid order key: '#{key}' description: #{description}"
     end
 
     def valid_fractional?(fractional)

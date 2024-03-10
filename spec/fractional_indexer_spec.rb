@@ -152,6 +152,20 @@ RSpec.describe FractionalIndexer do
       it { expect { subject }.to raise_error(FractionalIndexer::Error) }
     end
 
+    context "when prev_key is nil and next_key is minimum integer" do
+      let(:prev_key) { nil }
+      let(:next_key) { "A" + "0" * 26 }
+
+      it { expect { subject }.to raise_error(FractionalIndexer::Error) }
+    end
+
+    context "when prev_key is nil and next_key is 'A00000000000000000000000001'" do
+      let(:prev_key) { nil }
+      let(:next_key) { "A00000000000000000000000001" }
+
+      it { is_expected.to eq("A00000000000000000000000000V") }
+    end
+
     context "when prev_key is nil and next_key is 'A000000000000000000000000001'" do
       let(:prev_key) { nil }
       let(:next_key) { "A000000000000000000000000001" }
@@ -271,6 +285,24 @@ RSpec.describe FractionalIndexer do
           "a17",
           "a18",
           "a19",
+        ]
+      end
+
+      it { is_expected.to eq(result) }
+    end
+
+    context "when prev_key is nil and next_key is 'A00000000000000000000000001' and count is 5" do
+      let(:prev_key) { nil }
+      let(:next_key) { "A00000000000000000000000001" }
+      let(:count) { 5 }
+
+      let(:result) do
+        [
+          "A0000000000000000000000000005",
+          "A000000000000000000000000001",
+          "A000000000000000000000000002",
+          "A000000000000000000000000003",
+          "A000000000000000000000000005",
         ]
       end
 

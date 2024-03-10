@@ -164,7 +164,9 @@ RSpec.describe FractionalIndexer::OrderKey do
 
     context "when key is invalid prefix" do
       let(:key) { "!9" }
-      let(:error_message) { "invalid order key: '#{key}' description: prefix '!' is invalid. It should be a-z or A-Z." }
+      let(:error_message) do
+        "invalid order key: '#{key}' description: prefix '!' is invalid. It should be a-z or A-Z."
+      end
 
       it { expect { subject }.to raise_error(FractionalIndexer::Error, error_message) }
     end
@@ -205,6 +207,28 @@ RSpec.describe FractionalIndexer::OrderKey do
       let(:key) { "A" + "0" * 26 + "z" }
 
       it { is_expected.to be_truthy }
+    end
+
+    context "when key is not minimum integer" do
+      let(:key) { "A" + "0" * 25 + "1" }
+
+      it { is_expected.to be_falsey }
+    end
+  end
+
+  describe "#minimum?" do
+    subject { described_class.new(key).minimum? }
+
+    context "when key is minimum" do
+      let(:key) { "A" + "0" * 26 }
+
+      it { is_expected.to be_truthy }
+    end
+
+    context "when key is minimum integer(with fractional)" do
+      let(:key) { "A" + "0" * 26 + "2" }
+
+      it { is_expected.to be_falsey }
     end
 
     context "when key is not minimum integer" do
