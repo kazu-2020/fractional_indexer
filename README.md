@@ -12,7 +12,7 @@ Specifically, it implements Fractional Indexing as a means of managing order, re
 This gem was implemented based on the excellent article "[Implementing Fractional Indexing.](https://observablehq.com/@dgreensp/implementing-fractional-indexing)" I would like to express my gratitude to David Greenspan, the author of the article.
 
 > [!TIP]
-> I developed the gem `nabikae` integrated with Active Record, allowing you to easily incorporate Fractional Indexing into your product🎉
+> I developed the gem `narabikae` integrated with Active Record, allowing you to easily incorporate Fractional Indexing into your product🎉
 > https://github.com/kazu-2020/narabikae
 
 ## Installation
