@@ -3,8 +3,8 @@
 module FractionalIndexer
   class OrderKey
     INTEGER_BASE_DIGIT = 2
-    POSITIVE_SIGNS = ("a".."z").freeze
-    NEGATIVE_SIGNS = ("A".."Z").freeze
+    POSITIVE_SIGNS = ("a".."z")
+    NEGATIVE_SIGNS = ("A".."Z")
 
     attr_reader :key
 

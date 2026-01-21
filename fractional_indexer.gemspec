@@ -16,6 +16,7 @@ Gem::Specification.new do |spec|
   DESCRIPTION
   spec.homepage      = "https://github.com/kazu-2020/fractional_indexer"
   spec.license       = "MIT"
+  spec.required_ruby_version = ">= 3.1"
 
   if spec.respond_to?(:metadata)
     spec.metadata["source_code_uri"] = "https://github.com/kazu-2020/fractional_indexer"
