@@ -38,7 +38,7 @@ jobs:
         run: bundle exec rspec
       - name: Upload coverage reports to Codecov
         if: matrix.upload_codecov && github.ref == 'refs/heads/main'
-        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: kazu-2020/fractional_indexer
