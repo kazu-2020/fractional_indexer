@@ -13,5 +13,5 @@ gem "rspec", "~> 3.0",        require: false
 gem "rubocop", "~> 1.86",     require: false
 gem "rubocop-rspec",          require: false
 gem "rubocop-shopify",        require: false
-gem "simplecov", "~> 0.21.2", require: false
+gem "simplecov", "~> 0.22.0", require: false
 gem "simplecov-cobertura"
