@@ -9,7 +9,7 @@ GEM
     ast (2.4.3)
     diff-lcs (1.6.2)
     docile (1.4.1)
-    json (2.19.8)
+    json (2.19.9)
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
     parallel (1.28.0)
@@ -35,7 +35,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-support (3.13.6)
-    rubocop (1.87.0)
+    rubocop (1.88.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -78,7 +78,7 @@ DEPENDENCIES
   fractional_indexer!
   rake (>= 13.0)
   rspec (~> 3.0)
-  rubocop (~> 1.87)
+  rubocop (~> 1.88)
   rubocop-rspec
   rubocop-shopify
   simplecov (~> 0.22.0)
