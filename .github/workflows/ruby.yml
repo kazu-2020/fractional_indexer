@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - name: Set up Ruby
-        uses: ruby/setup-ruby@12fd324f1d0b43274fdc8130f6980590a667c455
+        uses: ruby/setup-ruby@0dafeac902942906541bc140009cdbf32665b601
         with:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
@@ -51,7 +51,7 @@ jobs:
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - name: Set up Ruby
-        uses: ruby/setup-ruby@12fd324f1d0b43274fdc8130f6980590a667c455
+        uses: ruby/setup-ruby@0dafeac902942906541bc140009cdbf32665b601
         with:
           ruby-version: '3.3'
           bundler-cache: true
