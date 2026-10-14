@@ -35,7 +35,7 @@ jobs:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
       - name: Run tests
-        run: bundle exec rspec
+        run: bundle exec rake test
       - name: Upload coverage reports to Codecov
         if: matrix.upload_codecov && github.ref == 'refs/heads/main'
         uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5

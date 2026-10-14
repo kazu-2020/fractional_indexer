@@ -1,5 +1,5 @@
-require:
-  - rubocop-rspec
+plugins:
+  - rubocop-minitest
 
 inherit_gem:
   rubocop-shopify: rubocop.yml
@@ -16,10 +16,4 @@ Style/ClassMethodsDefinitions:
 
 Style/MethodCallWithArgsParentheses:
   Exclude:
-    - 'spec/**/*'
-
-RSpec/NamedSubject:
-  Enabled: false
-
-RSpec/NestedGroups:
-  Enabled: false
+    - 'test/**/*'
