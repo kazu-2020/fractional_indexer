@@ -1,12 +1,13 @@
 changelog:
   exclude:
     labels: [skip-changelog]
+    authors: [dependabot, 'dependabot[bot]']
   categories:
+    - title: Breaking Changes
+      labels: [breaking-change]
     - title: Features & Improvements
       labels: [enhancement]
     - title: Bug Fixes
       labels: [bug]
-    - title: Dependencies
-      labels: [dependencies]
     - title: Other Changes
       labels: ['*']

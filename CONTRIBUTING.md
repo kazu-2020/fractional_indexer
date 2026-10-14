@@ -13,14 +13,15 @@ bundle exec rubocop
 ## Pull request labels
 
 Release notes are generated from merged pull requests, grouped by label (configured in [`.github/release.yml`](.github/release.yml)).
-The pull request title becomes the line in the release notes, so write it for users.
+The pull request title becomes the line in the release notes, so write it in English for users.
+Dependabot pull requests are left out of the release notes.
 
 | Label | Release notes section |
 | --- | --- |
+| `breaking-change` | Breaking Changes |
 | `enhancement` | Features & Improvements |
 | `bug` | Bug Fixes |
-| `dependencies` | Dependencies (Dependabot adds this automatically) |
-| `skip-changelog` | Excluded from release notes |
+| `skip-changelog` | Excluded (use for changes users don't see, such as tests and CI) |
 | none of the above | Other Changes |
 
 ## Releasing
