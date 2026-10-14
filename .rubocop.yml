@@ -5,7 +5,6 @@ inherit_gem:
   rubocop-shopify: rubocop.yml
 
 AllCops:
-  TargetRubyVersion: 3.1
   NewCops: enable
   Exclude:
     - Rakefile
