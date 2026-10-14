@@ -1,0 +1,38 @@
+name: Release
+
+on: workflow_dispatch
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: release
+    permissions:
+      contents: write
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+      - name: Run tests
+        run: bundle exec rake
+      - name: Publish to RubyGems
+        uses: rubygems/release-gem@7f9650160c1a4e7989fdc9855807bdbd421d8b6b # v1.4.1
+      - name: Create GitHub Release
+        run: |
+          tag="v$(ruby -r ./lib/fractional_indexer/version -e 'print FractionalIndexer::VERSION')"
+          gh release create "$tag" --generate-notes --verify-tag
+        env:
+          GH_TOKEN: ${{ github.token }}
