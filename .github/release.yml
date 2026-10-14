@@ -1,12 +1,13 @@
+# Categories for auto-generated release notes. See CONTRIBUTING.md for the label convention.
 changelog:
   exclude:
     labels: [skip-changelog]
   categories:
-    - title: 機能追加・改善
+    - title: Features & Improvements
       labels: [enhancement]
-    - title: バグ修正
+    - title: Bug Fixes
       labels: [bug]
-    - title: 依存関係の更新
+    - title: Dependencies
       labels: [dependencies]
-    - title: その他
+    - title: Other Changes
       labels: ['*']

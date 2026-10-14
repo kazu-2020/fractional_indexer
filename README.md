@@ -351,7 +351,7 @@ task.move_to_position_between(task_a, task_b)
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at <https://github.com/kazu-2020/fractional_indexer>.
+Bug reports and pull requests are welcome on GitHub at <https://github.com/kazu-2020/fractional_indexer>. See [CONTRIBUTING.md](CONTRIBUTING.md) for pull request labels and the release process.
 
 ## License
 

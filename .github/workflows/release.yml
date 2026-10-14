@@ -23,7 +23,7 @@ jobs:
         with:
           ruby-version: '3.3'
           bundler-cache: true
-      # タグと version.rb がずれていると、rake release が別のタグを作って公開してしまうため止める
+      # A mismatch would make `rake release` create and publish a different tag
       - name: Check tag matches gem version
         run: |
           version="v$(ruby -r ./lib/fractional_indexer/version -e 'print FractionalIndexer::VERSION')"
