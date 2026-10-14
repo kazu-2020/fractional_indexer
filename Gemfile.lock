@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fractional_indexer (0.4.1)
+    fractional_indexer (0.4.2)
 
 GEM
   remote: https://rubygems.org/
