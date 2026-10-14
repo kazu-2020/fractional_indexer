@@ -9,9 +9,9 @@ gemspec
 
 gem "bundler", ">= 2.4"
 gem "rake", ">= 13.0"
-gem "rspec", "~> 3.0",        require: false
+gem "minitest", "~> 5.25",    require: false
 gem "rubocop", "~> 1.91",     require: false
-gem "rubocop-rspec",          require: false
+gem "rubocop-minitest",       require: false
 gem "rubocop-shopify",        require: false
 gem "simplecov", "~> 0.22.0", require: false
 gem "simplecov-cobertura"

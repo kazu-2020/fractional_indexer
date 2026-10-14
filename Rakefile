@@ -1,6 +1,10 @@
 require "bundler/gem_tasks"
-require "rspec/core/rake_task"
+require "minitest/test_task"
 
-RSpec::Core::RakeTask.new(:spec)
+Minitest::TestTask.create do |t|
+  # Load SimpleCov before minitest/autorun so coverage is collected after the tests run.
+  t.framework = %(require "test_helper")
+  t.test_globs = ["test/**/*_test.rb"]
+end
 
-task :default => :spec
+task :default => :test
