@@ -1,4 +1,3 @@
-# Categories for auto-generated release notes. See CONTRIBUTING.md for the label convention.
 changelog:
   exclude:
     labels: [skip-changelog]

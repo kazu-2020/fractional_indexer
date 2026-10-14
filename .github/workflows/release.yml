@@ -31,6 +31,8 @@ jobs:
             echo "::error::Tag $GITHUB_REF_NAME does not match gem version $version"
             exit 1
           fi
+      - name: Run tests
+        run: bundle exec rake
       - name: Publish to RubyGems
         uses: rubygems/release-gem@7f9650160c1a4e7989fdc9855807bdbd421d8b6b # v1.4.1
       - name: Create GitHub Release
