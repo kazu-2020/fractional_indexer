@@ -25,16 +25,11 @@ The pull request title becomes the line in the release notes, so write it for us
 
 ## Releasing
 
-Releases are published by [`.github/workflows/release.yml`](.github/workflows/release.yml) when a `v*` tag is pushed.
+Releases are published by [`.github/workflows/release.yml`](.github/workflows/release.yml), which is run manually.
 
 One-time setup: on RubyGems.org, add a Trusted Publisher for this gem with repository `kazu-2020/fractional_indexer`, workflow `release.yml`, and environment `release`.
 
 1. Bump `FractionalIndexer::VERSION` in `lib/fractional_indexer/version.rb` and merge it into `main`.
-2. Tag the merged commit and push the tag:
+2. Open **Actions → Release → Run workflow** and run it on `main`.
 
-   ```sh
-   git tag v0.4.2
-   git push origin v0.4.2
-   ```
-
-The workflow checks that the tag matches `VERSION`, runs the tests, publishes the gem to RubyGems.org via Trusted Publishing, and creates a GitHub Release with generated notes.
+The workflow runs the tests, tags the commit as `v<VERSION>`, publishes the gem to RubyGems.org via Trusted Publishing, and creates a GitHub Release with generated notes. It does nothing when run on any branch other than `main`.

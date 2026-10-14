@@ -1,14 +1,13 @@
 name: Release
 
-on:
-  push:
-    tags: ['v*']
+on: workflow_dispatch
 
 permissions:
   contents: read
 
 jobs:
   release:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: release
@@ -23,19 +22,13 @@ jobs:
         with:
           ruby-version: '3.3'
           bundler-cache: true
-      # A mismatch would make `rake release` create and publish a different tag
-      - name: Check tag matches gem version
-        run: |
-          version="v$(ruby -r ./lib/fractional_indexer/version -e 'print FractionalIndexer::VERSION')"
-          if [ "$version" != "$GITHUB_REF_NAME" ]; then
-            echo "::error::Tag $GITHUB_REF_NAME does not match gem version $version"
-            exit 1
-          fi
       - name: Run tests
         run: bundle exec rake
       - name: Publish to RubyGems
         uses: rubygems/release-gem@7f9650160c1a4e7989fdc9855807bdbd421d8b6b # v1.4.1
       - name: Create GitHub Release
-        run: gh release create "$GITHUB_REF_NAME" --generate-notes --verify-tag
+        run: |
+          tag="v$(ruby -r ./lib/fractional_indexer/version -e 'print FractionalIndexer::VERSION')"
+          gh release create "$tag" --generate-notes --verify-tag
         env:
           GH_TOKEN: ${{ github.token }}
