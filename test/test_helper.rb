@@ -14,9 +14,9 @@ module TestSupport
     FractionalIndexer.configure { |config| config.base = base }
   end
 
-  def teardown
-    use_base(:base_62)
+  def after_teardown
     super
+    use_base(:base_62)
   end
 end
 
