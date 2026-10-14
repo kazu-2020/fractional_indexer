@@ -45,6 +45,8 @@ This gem implements the concepts from "[Realtime editing of ordered sequences](h
 
 ## Installation
 
+Requires Ruby 3.3 or later.
+
 Add this line to your application's Gemfile:
 
 ```ruby
