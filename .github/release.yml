@@ -1,0 +1,12 @@
+changelog:
+  exclude:
+    labels: [skip-changelog]
+  categories:
+    - title: 機能追加・改善
+      labels: [enhancement]
+    - title: バグ修正
+      labels: [bug]
+    - title: 依存関係の更新
+      labels: [dependencies]
+    - title: その他
+      labels: ['*']
