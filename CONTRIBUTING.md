@@ -6,7 +6,7 @@ Bug reports and pull requests are welcome on GitHub at <https://github.com/kazu-
 
 ```sh
 bin/setup
-bundle exec rspec
+bundle exec rake
 bundle exec rubocop
 ```
 
