@@ -13,5 +13,5 @@ gem "minitest", "~> 5.25",    require: false
 gem "rubocop", "~> 1.91",     require: false
 gem "rubocop-minitest",       require: false
 gem "rubocop-shopify",        require: false
-gem "simplecov", "~> 0.22.0", require: false
+gem "simplecov", "~> 1.3.2", require: false
 gem "simplecov-cobertura"
